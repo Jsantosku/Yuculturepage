@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yuculture App - Tradiciones de Yucatán a un clic</title>
+    <style>
+        :root {
+            --primary: #e63946;
+            --secondary: #457b9d;
+            --accent: #ffd166;
+            --dark: #1d3557;
+            --light: #f9f9f9;
+            --background: #fff9e6;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background);
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+        
+        .tagline {
+            font-style: italic;
+            margin-top: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: var(--accent);
+            color: var(--dark);
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            background-color: #ffe066;
+        }
+        
+        .cta-buttons {
+            margin-top: 30px;
+        }
+        
+        .app-download {
+            margin: 0 10px;
+            display: inline-block;
+        }
+        
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 80px 20px;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('/api/placeholder/1200/800');
+            background-size: cover;
+            background-position: center;
+            color: white;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+        
+        .content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+        
+        .section {
+            margin-bottom: 80px;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-header h2 {
+            color: var(--dark);
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            width: 60%;
+            height: 3px;
+            background-color: var(--primary);
+            bottom: -10px;
+            left: 20%;
+        }
+        
+        .section-header p {
+            color: #666;
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+        
+        .feature-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            text-align: center;
+            padding: 30px 20px;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .feature-card h3 {
+            color: var(--dark);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        
+        .app-showcase {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        
+        .app-screenshot {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+        }
+        
+        .app-screenshot img {
+            max-width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .app-description {
+            flex: 1;
+            min-width: 300px;
+            padding: 20px;
+        }
+        
+        .app-description h3 {
+            color: var(--dark);
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+        
+        .app-features-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        .app-features-list li {
+            margin-bottom: 15px;
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .app-features-list li:before {
+            content: "✓";
+            color: var(--primary);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+        
+        .testimonials {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+        
+        .testimonial-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        
+        .testimonial-content {
+            margin-bottom: 20px;
+            font-style: italic;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .author-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-right: 15px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .author-info h4 {
+            margin: 0;
+            color: var(--dark);
+        }
+        
+        .author-info p {
+            margin: 5px 0 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .download-section {
+            background-color: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 80px 20px;
+        }
+        
+        .download-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .download-section p {
+            max-width: 700px;
+            margin: 0 auto 40px;
+            font-size: 1.1rem;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 40px 0;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+        
+        .footer-column {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+        
+        .footer-column h3 {
+            color: var(--accent);
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+        
+        .footer-column ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: var(--accent);
+        }
+        
+        .social-links {
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            color: white;
+            margin-right: 15px;
+            font-size: 1.2rem;
+            text-decoration: none;
+        }
+        
+        .copyright {
+            margin-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 20px;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .section-header h2 {
+                font-size: 2rem;
+            }
+            
+            .app-showcase {
+                flex-direction: column-reverse;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .footer-column {
+                margin-bottom: 40px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">YUCULTURE</div>
+        <div class="tagline">Conectando artesanos con el mundo</div>
+    </header>
+    
+    <section class="hero">
+        <h1>El Mercado Yucateco en tu Bolsillo</h1>
+        <p>Yuculture es la primera aplicación que conecta a los comerciantes tradicionales de Yucatán directamente con clientes de todo el mundo. Descubre, compra y apoya la auténtica artesanía, gastronomía y cultura yucateca.</p>
+        <div class="cta-buttons">
+            <a href="#" class="cta-button app-download">Descarga para Android</a>
+            <a href="#" class="cta-button app-download">Descarga para iOS</a>
+        </div>
+    </section>
+    
+    <div class="content">
+        <section class="section">
+            <div class="section-header">
+                <h2>Llevando las tradiciones yucatecas al mundo digital</h2>
+                <p>Yuculture revoluciona la forma en que los artesanos y comerciantes tradicionales de Yucatán conectan con sus clientes, preservando la rica herencia cultural mientras se adaptan a la era digital.</p>
+            </div>
+            
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">🏪</div>
+                    <h3>Tu puesto virtual</h3>
+                    <p>Crea tu tienda digital en minutos y muestra tus productos tradicionales a miles de personas interesadas en la cultura yucateca.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">💸</div>
+                    <h3>Pagos seguros</h3>
+                    <p>Recibe pagos de forma segura y rápida. Ofrecemos múltiples métodos y retiros sencillos a tu cuenta bancaria.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📦</div>
+                    <h3>Envíos simplificados</h3>
+                    <p>Gestiona tus envíos fácilmente con nuestras integraciones con servicios de paquetería locales y nacionales.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Sin complicaciones</h3>
+                    <p>Interfaz intuitiva pensada especialmente para comerciantes tradicionales sin experiencia tecnológica previa.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Gestión sencilla</h3>
+                    <p>Controla tu inventario, ventas y estadísticas desde un solo lugar, con herramientas fáciles de usar.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🌍</div>
+                    <h3>Alcance global</h3>
+                    <p>Llega a clientes de todo México y el mundo interesados en la auténtica artesanía y productos yucatecos.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <div class="section-header">
+                <h2>Una aplicación diseñada para preservar tradiciones</h2>
+                <p>Yuculture está construida considerando las necesidades específicas de los comerciantes de productos tradicionales yucatecos.</p>
+            </div>
+            
+            <div class="app-showcase">
+                <div class="app-screenshot">
+                    <img src="/api/placeholder/300/600" alt="Interfaz de Yuculture App" />
+                </div>
+                
+                <div class="app-description">
+                    <h3>Características principales</h3>
+                    <ul class="app-features-list">
+                        <li>Catálogo digital para mostrar tus productos tradicionales con fotos y descripciones detalladas</li>
+                        <li>Historias donde puedes compartir el proceso artesanal y el significado cultural de tus creaciones</li>
+                        <li>Herramientas de gestión de inventario adecuadas para artesanos y pequeños productores</li>
+                        <li>Sistema de mensajería integrado para comunicarte directamente con tus clientes</li>
+                        <li>Opciones de envío locales, nacionales e internacionales</li>
+                        <li>Panel de análisis simplificado para entender tus ventas y clientes</li>
+                        <li>Capacitación y soporte en español y maya yucateco</li>
+                        <li>Comunidad de vendedores para compartir experiencias y mejores prácticas</li>
+                    </ul>
+                    <a href="#" class="cta-button">Regístrate como vendedor</a>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <div class="section-header">
+                <h2>Lo que dicen nuestros vendedores</h2>
+                <p>Comerciantes y artesanos que ya están usando Yuculture para expandir su negocio tradicional.</p>
+            </div>
+            
+            <div class="testimonials">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>Antes solo vendía mis hamacas en el mercado local. Con Yuculture, ahora envío mis creaciones hasta Canadá y Estados Unidos. Nunca imaginé que mis tejidos tradicionales llegarían tan lejos.</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar" style="background-image: url('/api/placeholder/60/60');"></div>
+                        <div class="author-info">
+                            <h4>Doña María Canul</h4>
+                            <p>Tejedora de hamacas tradicionales, Valladolid</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>La aplicación es muy fácil de usar. Yo no sabía nada de tecnología, pero mi nieta me ayudó al principio y ahora manejo mi tienda de guayaberas bordadas yo solo. Mis ventas aumentaron un 70%.</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar" style="background-image: url('/api/placeholder/60/60');"></div>
+                        <div class="author-info">
+                            <h4>Don Pedro Mex</h4>
+                            <p>Artesano de guayaberas, Mérida</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>Los turistas que visitaban mi puesto de dulces tradicionales ahora pueden seguir comprando mis productos después de regresar a sus países. Yuculture me dio la oportunidad de expandir mi negocio familiar.</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar" style="background-image: url('/api/placeholder/60/60');"></div>
+                        <div class="author-info">
+                            <h4>Lupita Dzib</h4>
+                            <p>Productora de dulces típicos, Izamal</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <section class="download-section">
+        <h2>¡Comienza a vender tus productos tradicionales hoy mismo!</h2>
+        <p>Únete a la comunidad de artesanos y comerciantes yucatecos que están llevando sus tradiciones al mundo digital. Registrarse es gratis y solo toma unos minutos.</p>
+        <a href="#" class="cta-button">Registrar mi negocio</a>
+    </section>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>YUCULTURE</h3>
+                <p>Conectando las tradiciones yucatecas con el mundo. Una plataforma para que los comerciantes tradicionales puedan expandir su negocio de forma digital.</p>
+                <div class="social-links">
+                    <a href="#">Facebook</a>
+                    <a href="#">Instagram</a>
+                    <a href="#">Twitter</a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Enlaces rápidos</h3>
+                <ul>
+                    <li><a href="#">Inicio</a></li>
+                    <li><a href="#">Características</a></li>
+                    <li><a href="#">Testimonios</a></li>
+                    <li><a href="#">Descargar app</a></li>
+                    <li><a href="#">Registrarse como vendedor</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Soporte</h3>
+                <ul>
+                    <li><a href="#">Centro de ayuda</a></li>
+                    <li><a href="#">Guías para vendedores</a></li>
+                    <li><a href="#">Contacto</a></li>
+                    <li><a href="#">Preguntas frecuentes</a></li>
+                    <li><a href="#">Términos y condiciones</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 Yuculture - Llevando las tradiciones yucatecas al mundo digital</p>
+        </div>
+    </footer>
+</body>
+</html>
